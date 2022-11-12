@@ -14,6 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::get('/test', function () {
+    $status = "Live";
+    return response()->json(compact('status'));
+});
+
+Route::group([
+    'prefix' => '/admin',
+], function(){
+    Route::post('/login', "AuthController@login")->name('admin.login');
+    Route::get('/logout', "AuthController@logout")->middleware('auth:sanctum')->name('admin.logout');
 });
